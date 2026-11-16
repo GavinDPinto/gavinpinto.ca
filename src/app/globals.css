@@ -2,20 +2,107 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Colour tokens — see DESIGN.md */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  color-scheme: light;
+  --bg: #fbfaf7;
+  --fg: #171717;
+  --body: #3d3b37;
+  --muted: #6b6861;
+  --line: #e4e1d9;
+  --hover: #f1efe9;
 }
 
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --bg: #171613;
+  --fg: #ecebe6;
+  --body: #c9c6be;
+  --muted: #9f9c94;
+  --line: #2f2d28;
+  --hover: #201f1b;
+}
+
+/* If scripts are off, still follow the system setting */
 @media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+  :root:not([data-theme]) {
+    color-scheme: dark;
+    --bg: #171613;
+    --fg: #ecebe6;
+    --body: #c9c6be;
+    --muted: #9f9c94;
+    --line: #2f2d28;
+    --hover: #201f1b;
   }
 }
 
+html {
+  background: var(--bg);
+}
+
 body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+  color: var(--body);
+  background: var(--bg);
+  font-family: var(--font-geist-sans), system-ui, sans-serif;
+  font-size: 15px;
+  line-height: 1.55;
+}
+
+::selection {
+  background: var(--fg);
+  color: var(--bg);
+}
+
+:focus-visible {
+  outline: 2px solid var(--fg);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+@layer components {
+  .link {
+    color: var(--fg);
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 3px;
+    text-decoration-color: var(--muted);
+    transition: text-decoration-color 0.15s ease;
+  }
+  .link:hover {
+    text-decoration-color: var(--fg);
+  }
+
+  /* Content fades up once on load, staggered by --i */
+  .rise {
+    animation: rise 0.6s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+    animation-delay: calc(var(--i, 0) * 60ms);
+  }
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* Theme toggle shows the icon for the mode you would switch to */
+.icon-sun {
+  display: none;
+}
+:root[data-theme="dark"] .icon-sun {
+  display: block;
+}
+:root[data-theme="dark"] .icon-moon {
+  display: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rise {
+    animation: none;
+  }
 }
