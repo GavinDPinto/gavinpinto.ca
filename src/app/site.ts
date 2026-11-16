@@ -1,7 +1,7 @@
 // Every word here comes from COPY.md. Change the copy there first, then here.
 
 export const site = {
-  url: "https://gavindpinto.github.io",
+  url: "https://gavinpinto.ca",
   title: "Gavin Pinto",
   description:
     "Gavin Pinto studies computer science at the University of Waterloo and works on infrastructure at WATcloud. Based in Toronto.",
