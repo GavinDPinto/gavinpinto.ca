@@ -1,4 +1,4 @@
-// Every word here comes from COPY.md. Change the copy there first, then here.
+// All of the site's copy and links live in this file.
 
 export const site = {
   url: "https://gavinpinto.ca",
